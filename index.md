@@ -52,8 +52,10 @@ custom-field input {
 }
 .position2 {
   position: absolute;
-  top: 765;
-  right: 642;
+  top: 785;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   color: white;
   border: 0px solid  gray;
   padding: 12px;
@@ -96,6 +98,7 @@ custom-field input {
             <button id="btn">Click to Add</button>
         </custom-field>
         <button onclick="logSort()">Display Initiative</button>
+        <button onclick="clearInitiative()">Clear</button>
     </form>
     <script>
         let movies = [{id: 1, ftitle: 'Monster 1', commentary: '18'}];
@@ -172,19 +175,28 @@ custom-field input {
                     sortDiv.classList.add('sortText')
                     sortDiv.innerHTML =  "Name: " + movies[i].ftitle + "<br />" + "Count: " + count + "<br />" + "\nInitiative: " + roll;
                     if (i < 4) {
-                      initDiv1.append(sortDiv);
+                      initDiv1.appendChild(sortDiv);
                     }
                     else if (i < 8) {
-                     initDiv2.append(sortDiv);
+                     initDiv2.appendChild(sortDiv);
                     }
                     else {
-                    initDiv3.append(sortDiv);
+                    initDiv3.appendChild(sortDiv);
                     }
                  } 
                 }
-        function changeStyle() {
-          event.preventDefault();
-          document.getElementById("bodyDiv").style.display = 'none';
-}
+        function removeAllChildNodes(parent) {
+         event.preventDefault()
+         while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+         }
+        }
+        function clearInitiative() {
+          event.preventDefault()
+          removeAllChildNodes(initDiv1)
+          removeAllChildNodes(initDiv2)
+          removeAllChildNodes(InitDiv3)
+          console.log(movies)
+        }
     </script>
 </body>

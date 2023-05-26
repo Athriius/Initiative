@@ -125,7 +125,6 @@ custom-field input {
             console.log(movies[movieindex].ftitle);
             const newDiv = document.createElement("div");
             newDiv.innerText = "Movie: " + movies[movieindex].ftitle + "\nComments: " + movies[movieindex].commentary
-            bodyDiv.appendChild(newDiv)
         }
         const titleDiv = document.createElement("div");
                     titleDiv.classList.add('sortTitle'); 
@@ -144,26 +143,18 @@ custom-field input {
         function increaseFontSize() {
         document.getElementById('a').style.fontSize = "50px";
         }
-        function sortMovies(array, key) {
+        function sortMovies(array, valueKey) {
                 event.preventDefault();
-                return array.sort((a, b) => {
-                  const movieA = a[key].toUpperCase();
-                  const movieB = b[key].toUpperCase();
-                  if (movieA < movieB) {
-                    return 1;
-                  }
-                 if (movieA > movieB) {
-                   return -1;
-                  }
-                  return 0;
-                });
+                array.sort((a, b) => b[valueKey] - a[valueKey]);
               }      
               function logSort() {
-                event.preventDefault();    
+                event.preventDefault();   
+                sortMovies(movies, 'commentary');
+                console.log(movies);
                 // Sort the array of dictionaries by the 'ftitle' 
-                var sortedData = sortMovies(movies, 'commentary');        
+                //var sortedData = sortMovies(movies, 'commentary');        
                 // Display the sorted data in the console
-                console.log(sortedData);  
+                //console.log(sortedData);  
                 for (var i=0, j=i+1;i<movies.length;i+=1) {
                     let j = 1 + i;
                     const g = String(j)

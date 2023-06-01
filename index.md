@@ -99,9 +99,10 @@ custom-field input {
         </custom-field>
         <button onclick="logSort()">Display Initiative</button>
         <button onclick="clearInitiative()">Clear</button>
+        <button onclick="removeInitiative()">Remove From Initiative</button>
     </form>
     <script>
-        let movies = [{id: 1, ftitle: 'Monster 1', commentary: '18'}];
+        let movies = [];
         // example {id:1592304983049, title: 'Avengers: Endgame', commentary: 'good action scenes.'}
         const addMovie = (ev)=>{
             ev.preventDefault();  //stops the form submitting automatically
@@ -115,7 +116,7 @@ custom-field input {
             console.warn('added' , {movies} ); // displays array in the console
             //saving to localStorage
             localStorage.setItem('MyMovieList', JSON.stringify(movies) );
-            Addmovie()
+            //Addmovie()
         };
         document.addEventListener('DOMContentLoaded', ()=>{
             document.getElementById('btn').addEventListener('click', addMovie);
@@ -148,7 +149,7 @@ custom-field input {
                 array.sort((a, b) => b[valueKey] - a[valueKey]);
               }      
               function logSort() {
-                event.preventDefault();   
+                event.preventDefault();
                 sortMovies(movies, 'commentary');
                 console.log(movies);
                 // Sort the array of dictionaries by the 'ftitle' 
@@ -188,6 +189,22 @@ custom-field input {
           removeAllChildNodes(initDiv2)
           removeAllChildNodes(InitDiv3)
           console.log(movies)
+        }
+        function functiontofindIndexByKeyValue(arraytosearch, key, valuetosearch) {
+        for (var i = 0; i < arraytosearch.length; i++) {
+        if (arraytosearch[i][key] == valuetosearch) {
+        return i;
+        }
+        }
+        return null;
+        }
+        function removeInitiative() {
+         event.preventDefault()
+         var index = functiontofindIndexByKeyValue(movies, "ftitle", document.getElementById('ftitle').value);
+         console.log(index);
+         const x = movies.splice(index, 1);
+         console.log(movies);
+         clearInitiative();
         }
     </script>
 </body>

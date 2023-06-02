@@ -33,7 +33,7 @@ custom-field input {
   font-size: 24px;
   text-align: center;
 }
-.movieBody {
+.playerBody {
   margin: auto;
   background-color: black;
   border: 3px solid  #FFC133;
@@ -85,13 +85,13 @@ custom-field input {
 </style>
     <form>
         <custom-field class="formBox">
-            <label for="ftitle">Name</label>
-            <input type="text" id="ftitle" placeholder="Name"/>
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Name"/>
         </custom-field>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
         <custom-field class="formBox">
-            <label for="commentary">Initiative Roll</label>
-            <input type="text" id="commentary" placeholder="Initiative Roll"/>
+            <label for="initiative">Initiative Roll</label>
+            <input type="number" id="initiative" min="-40" max="40" step="1" placeholder="Initiative Roll"/>
         </custom-field>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
         <custom-field class="formBox">
@@ -102,30 +102,30 @@ custom-field input {
         <button onclick="removeInitiative()">Remove From Initiative</button>
     </form>
     <script>
-        let movies = [];
-        // example {id:1592304983049, title: 'Avengers: Endgame', commentary: 'good action scenes.'}
-        const addMovie = (ev)=>{
+        let players = [];
+        // example {id:1592304983049, title: 'Avengers: Endgame', initiative: 'good action scenes.'}
+        const addPlayer = (ev)=>{
             ev.preventDefault();  //stops the form submitting automatically
-            let movie = {
+            let player = {
                 id: Date.now(),
-                ftitle: document.getElementById('ftitle').value,
-                commentary: document.getElementById('commentary').value
+                name: document.getElementById('name').value,
+                initiative: document.getElementById('initiative').value
             }
-           movies.push(movie);
+           players.push(player);
             document.forms[0].reset(); // to clear the form for the next entries
-            console.warn('added' , {movies} ); // displays array in the console
+            console.warn('added' , {players} ); // displays array in the console
             //saving to localStorage
-            localStorage.setItem('MyMovieList', JSON.stringify(movies) );
-            //Addmovie()
+            localStorage.setItem('MyPlayerList', JSON.stringify(players) );
+            //Addplayer()
         };
         document.addEventListener('DOMContentLoaded', ()=>{
-            document.getElementById('btn').addEventListener('click', addMovie);
+            document.getElementById('btn').addEventListener('click', addPlayer);
         });
-        function Addmovie() {
-            var movieindex = movies.length - 1;
-            console.log(movies[movieindex].ftitle);
+        function Addplayer() {
+            var playerindex = players.length - 1;
+            console.log(players[playerindex].name);
             const newDiv = document.createElement("div");
-            newDiv.innerText = "Movie: " + movies[movieindex].ftitle + "\nComments: " + movies[movieindex].commentary
+            newDiv.innerText = "Player: " + players[playerindex].name + "\nComments: " + players[playerindex].initiative
         }
         const titleDiv = document.createElement("div");
                     titleDiv.classList.add('sortTitle'); 
@@ -144,28 +144,28 @@ custom-field input {
         function increaseFontSize() {
         document.getElementById('a').style.fontSize = "50px";
         }
-        function sortMovies(array, valueKey) {
+        function sortPlayers(array, valueKey) {
                 event.preventDefault();
                 array.sort((a, b) => b[valueKey] - a[valueKey]);
               }      
               function logSort() {
                 event.preventDefault();
-                sortMovies(movies, 'commentary');
-                console.log(movies);
-                // Sort the array of dictionaries by the 'ftitle' 
-                //var sortedData = sortMovies(movies, 'commentary');        
+                sortPlayers(players, 'initiative');
+                console.log(players);
+                // Sort the array of dictionaries by the 'name' 
+                //var sortedData = sortPlayers(players, 'initiative');        
                 // Display the sorted data in the console
                 //console.log(sortedData);  
-                for (var i=0, j=i+1;i<movies.length;i+=1) {
+                for (var i=0, j=i+1;i<players.length;i+=1) {
                     let j = 1 + i;
                     const g = String(j)
                     let count = g.fontsize(8);
-                    const r = String(movies[i].commentary);
+                    const r = String(players[i].initiative);
                     let roll = r.fontsize(8);
-                    console.log(movies[i].ftitle); // shows each movie displayed in console
+                    console.log(players[i].name); // shows each player displayed in console
                     const sortDiv = document.createElement("div");
                     sortDiv.classList.add('sortText')
-                    sortDiv.innerHTML =  "Name: " + movies[i].ftitle + "<br />" + "Count: " + count + "<br />" + "\nInitiative: " + roll;
+                    sortDiv.innerHTML =  "Name: " + players[i].name + "<br />" + "Count: " + count + "<br />" + "\nInitiative: " + roll;
                     if (i < 4) {
                       initDiv1.appendChild(sortDiv);
                     }
@@ -188,9 +188,9 @@ custom-field input {
           removeAllChildNodes(initDiv1)
           removeAllChildNodes(initDiv2)
           removeAllChildNodes(InitDiv3)
-          console.log(movies)
+          console.log(players)
         }
-        function functiontofindIndexByKeyValue(arraytosearch, key, valuetosearch) {
+        function findNameIndex(arraytosearch, key, valuetosearch) {
         for (var i = 0; i < arraytosearch.length; i++) {
         if (arraytosearch[i][key] == valuetosearch) {
         return i;
@@ -200,10 +200,10 @@ custom-field input {
         }
         function removeInitiative() {
          event.preventDefault()
-         var index = functiontofindIndexByKeyValue(movies, "ftitle", document.getElementById('ftitle').value);
+         var index = findNameIndex(players, "name", document.getElementById('name').value);
          console.log(index);
-         const x = movies.splice(index, 1);
-         console.log(movies);
+         const x = players.splice(index, 1);
+         console.log(players);
          clearInitiative();
         }
     </script>
